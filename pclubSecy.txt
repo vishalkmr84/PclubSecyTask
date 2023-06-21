@@ -1,0 +1,183 @@
+                                                  CONSTRUCTING PILLARS
+                                               Time limit per test - 1sec
+                                              memory limit per test - 256MB
+                                                Input- Standard Input
+                                               Output- Standard Output
+
+You are given a series of n pillars(1<=n<=1000) including normal and distorted[you can take the length of normal pillar as +ve and length of distorted pillar as -ve].Your task is to make a series of pillars which are all normal(positive) and length of each pillar is either all even or all odd in the new series.
+
+You have to make the pillars in the new series whose lengths is equal to the length of pillar in original series of pillars or equal to absolute difference of length of any two pillars of original series.
+Note:-The length of each pillar in the newly formed series should be unique.
+
+Your final task is to determine whether it is possible to build a series of 'n'new pillars with above constraints or not.
+
+Input:-
+The first line of input contains an integer t(1≤t≤10000) — the number of test cases.
+                                                               
+
+
+Then follow the descriptions of the test cases.
+
+The first line of each case contains a single integer n(1≤n≤1000) — the length of the array a.
+
+ 
+The second line of each case contains n positive integers a1,a2,…,an (1≤ai≤100000000) — the elements of the array a.
+
+Output
+Output t strings, each of which is the answer to the corresponding test case. As the answer, output "YES" if it is possible to 
+to make a series of new array of lenght n, otherwise print "NO".
+
+For example:-
+
+INPUT
+
+8
+5
+2 6 8 4 3
+5
+1 4 7 6 9
+4
+2 6 4 10
+7
+5 29 13 9 10000001 11 3
+5
+2 1 2 4 2
+5
+2 4 5 4 3
+4
+2 5 5 4
+5
+-2 4 5 8 -10
+
+OUTPUT
+
+NO
+YES
+YES
+YES
+NO
+NO
+NO
+NO
+
+
+Ans:- In C++;
+
+#include<bits/stdtr1c++.h>
+#include<climits>
+#include<cmath>
+using namespace std;
+
+int32_t main()
+{
+   int t;
+   cin>>t;
+   for(int x=0;x<t;x++)
+   {
+   
+      int n;
+      cin>>n;
+      int a[n];
+      for(int i=0;i<n;i++)
+      {
+         cin>>a[i];
+      }
+     int b[2000];
+      int y=0;
+
+      for(int i=0;i<n;i++)
+      {
+         b[y] = a[i];
+         y++;
+      }
+       
+      int dif;
+      for(int i=0;i<n-1;i++)
+      {
+         for(int j=i+1;j<n;j++)
+        {
+          dif = abs(abs(a[i]) - abs(a[j]));
+          b[y] = dif;
+          y++;
+          
+        }
+
+      }
+      sort(b,b+y);
+      
+     int count1=0;
+     int count2=0;
+     int k=0;
+      while(k!=y)
+      {
+         if(b[k] == b[k+1])
+         {
+            k++;
+         }
+         else{
+        if(b[k]%2==0 && b[k]>0)
+        count1++; 
+        else if(b[k]%2!=0 && b[k]>0)
+        count2++;
+
+        k++;
+          }
+
+      }
+   
+     
+      if(count1>=n || count2>=n)
+      cout<<"YES"<<endl;
+      else 
+      cout<<"NO"<<endl;
+
+   }
+   return 0;
+}
+
+code for generating test cases:-
+
+#include <iostream>
+#include <algorithm>
+#include <random>
+#include <chrono>
+using namespace std;
+
+void generateTestCases()
+{
+    // Initialize random number generator
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    default_random_engine generator(seed);
+
+ 
+    uniform_int_distribution<int> tDistribution(1, 10); // Adjust the range as needed
+    uniform_int_distribution<int> nDistribution(1, 100); // Adjust the range as needed
+    uniform_int_distribution<int> elementDistribution(-1000, 1000); // Adjust the range as needed
+
+    int t = tDistribution(generator);
+    cout << t << endl;
+
+    for (int i = 0; i < t; i++)
+    {
+        int n = nDistribution(generator);
+        cout << n << endl;
+
+        int a[n];
+        for (int j = 0; j < n; j++)
+        {
+            int element = elementDistribution(generator);
+            cout << element << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    generateTestCases();
+    return 0;
+}
+
+
+
+
